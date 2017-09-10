@@ -27,7 +27,17 @@ set(MONGOCXX_OUTPUT_BASENAME "mongocxx" CACHE STRING "Output mongocxx library ba
 
 set(MONGOCXX_PKG_DEP "") # Required by mongocxx-config.cmake.in.
 
-if(TARGET mongoc_shared OR TARGET mongoc_static)
+if (DISABLE_PACKAGES STREQUAL ON)
+    if(NOT MONGOCXX_LINK_WITH_STATIC_MONGOC)
+      set(libmongoc_target ${MONGOC_LIBRARIES})
+      set(libmongoc_include_directories ${MONGOC_INCLUDE_DIRS})
+      set(libmongoc_definitions ${MONGOC_DEFINITIONS})
+    else()
+      set(libmongoc_target ${MONGOC_STATIC_LIBRARIES})
+      set(libmongoc_include_directories ${MONGOC_STATIC_INCLUDE_DIRS})
+      set(libmongoc_definitions ${MONGOC_STATIC_DEFINITIONS})
+    endif()
+elseif(TARGET mongoc_shared OR TARGET mongoc_static)
     # If these targets exist, then libmongoc has already been included as a project
     # sub-directory
     message(STATUS "found libmongoc targets declared in current build scope; version not checked")

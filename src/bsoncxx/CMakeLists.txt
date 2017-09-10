@@ -79,7 +79,17 @@ endif()
 
 set(BSONCXX_PKG_DEP "") # Required by bsoncxx-config.cmake.in.
 
-if(TARGET bson_shared OR TARGET bson_static)
+if(DISABLE_PACKAGES STREQUAL ON)
+    if(NOT BSONCXX_LINK_WITH_STATIC_MONGOC)
+      set(libbson_target ${BSON_LIBRARIES})
+      set(libbson_include_directories ${BSON_INCLUDE_DIRS})
+      set(libbson_definitions ${BSON_DEFINITIONS})
+    else()
+      set(libbson_target ${BSON_STATIC_LIBRARIES})
+      set(libbson_include_directories ${BSON_STATIC_INCLUDE_DIRS})
+      set(libbson_definitions ${BSON_STATIC_DEFINITIONS})
+    endif()
+elseif(TARGET bson_shared OR TARGET bson_static)
     # If these targets exist, then libbson has already been included as a project
     # sub-directory
     message(STATUS "found libbson targets declared in current build scope; version not checked")
