@@ -70,6 +70,8 @@ TEST_CASE("find", "[find][option]") {
     CHECK_OPTIONAL_ARGUMENT(find_opts, max_time, std::chrono::milliseconds{300});
     CHECK_OPTIONAL_ARGUMENT(find_opts, min, min.view());
     CHECK_OPTIONAL_ARGUMENT(find_opts, no_cursor_timeout, true);
+    CHECK_OPTIONAL_ARGUMENT(find_opts, oplog_replay, true);
+    CHECK_OPTIONAL_ARGUMENT(find_opts, exhaust, true);
     CHECK_OPTIONAL_ARGUMENT(find_opts, projection, projection.view());
     CHECK_OPTIONAL_ARGUMENT(find_opts, read_preference, read_preference{});
     CHECK_OPTIONAL_ARGUMENT(find_opts, read_concern, read_concern{});
@@ -88,6 +90,7 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
     using mongocxx::v_noabi::to_v1;
 
     auto const has_value = GENERATE(false, true);
+    auto const flag = GENERATE(false, true);
 
     bsoncxx::v1::stdx::optional<bool> allow_disk_use;
     bsoncxx::v1::stdx::optional<bool> allow_partial_results;
@@ -103,6 +106,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
     bsoncxx::v1::stdx::optional<std::chrono::milliseconds> max_time;
     bsoncxx::v1::stdx::optional<bsoncxx::v1::document::value> min;
     bsoncxx::v1::stdx::optional<bool> no_cursor_timeout;
+    bsoncxx::v1::stdx::optional<bool> oplog_replay;
+    bsoncxx::v1::stdx::optional<bool> exhaust;
     bsoncxx::v1::stdx::optional<bsoncxx::v1::document::value> projection;
     bsoncxx::v1::stdx::optional<v1::read_concern> read_concern;
     bsoncxx::v1::stdx::optional<v1::read_preference> read_preference;
@@ -126,6 +131,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
         max_time.emplace();
         min.emplace();
         no_cursor_timeout.emplace();
+        oplog_replay.emplace(flag);
+        exhaust.emplace(!flag);
         projection.emplace();
         read_concern.emplace();
         read_preference.emplace();
@@ -156,6 +163,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             from.max_time(*max_time);
             from.min(*min);
             from.no_cursor_timeout(*no_cursor_timeout);
+            from.oplog_replay(*oplog_replay);
+            from.exhaust(*exhaust);
             from.projection(*projection);
             from.read_concern(*read_concern);
             from.read_preference(*read_preference);
@@ -182,6 +191,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             CHECK(to.max_time() == *max_time);
             CHECK(to.min().value() == min->view());
             CHECK(to.no_cursor_timeout() == *no_cursor_timeout);
+            CHECK(to.oplog_replay() == *oplog_replay);
+            CHECK(to.exhaust() == *exhaust);
             CHECK(to.projection().value() == projection->view());
             CHECK(to.read_concern() == *read_concern);
             CHECK(to.read_preference() == *read_preference);
@@ -204,6 +215,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             CHECK_FALSE(to.max_time().has_value());
             CHECK_FALSE(to.min().has_value());
             CHECK_FALSE(to.no_cursor_timeout().has_value());
+            CHECK_FALSE(to.oplog_replay().has_value());
+            CHECK_FALSE(to.exhaust().has_value());
             CHECK_FALSE(to.projection().has_value());
             CHECK_FALSE(to.read_concern().has_value());
             CHECK_FALSE(to.read_preference().has_value());
@@ -234,6 +247,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             from.max_time(*max_time);
             from.min(from_v1(min->view()));
             from.no_cursor_timeout(*no_cursor_timeout);
+            from.oplog_replay(*oplog_replay);
+            from.exhaust(*exhaust);
             from.projection(from_v1(projection->view()));
             from.read_concern(*read_concern);
             from.read_preference(*read_preference);
@@ -268,6 +283,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             CHECK(to.max_time() == *max_time);
             CHECK(to.min().value() == min->view());
             CHECK(to.no_cursor_timeout() == *no_cursor_timeout);
+            CHECK(to.oplog_replay() == *oplog_replay);
+            CHECK(to.exhaust() == *exhaust);
             CHECK(to.projection().value() == projection->view());
             CHECK(to.read_concern() == *read_concern);
             CHECK(to.read_preference() == *read_preference);
@@ -296,6 +313,8 @@ TEST_CASE("v1", "[mongocxx][v_noabi][options][find]") {
             CHECK_FALSE(to.max_time().has_value());
             CHECK_FALSE(to.min().has_value());
             CHECK_FALSE(to.no_cursor_timeout().has_value());
+            CHECK_FALSE(to.oplog_replay().has_value());
+            CHECK_FALSE(to.exhaust().has_value());
             CHECK_FALSE(to.projection().has_value());
             CHECK_FALSE(to.read_concern().has_value());
             CHECK_FALSE(to.read_preference().has_value());

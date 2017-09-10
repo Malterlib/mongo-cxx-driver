@@ -378,6 +378,14 @@ void append_to(v1::find_options const& opts, scoped_bson& doc) {
         doc += scoped_bson{BCON_NEW("min", BCON_DOCUMENT(scoped_bson_view{*opt}.bson()))};
     }
 
+    if (auto const& opt = opts.oplog_replay()) {
+        doc += scoped_bson{BCON_NEW("oplogReplay", BCON_BOOL(*opt))};
+    }
+
+    if (auto const& opt = opts.exhaust()) {
+        doc += scoped_bson{BCON_NEW("exhaust", BCON_BOOL(*opt))};
+    }
+
     if (auto const& opt = opts.no_cursor_timeout()) {
         doc += scoped_bson{BCON_NEW("noCursorTimeout", BCON_BOOL(*opt))};
     }

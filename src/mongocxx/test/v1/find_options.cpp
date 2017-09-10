@@ -93,6 +93,8 @@ TEST_CASE("default", "[mongocxx][v1][find_options]") {
     CHECK_FALSE(opts.max_time().has_value());
     CHECK_FALSE(opts.min().has_value());
     CHECK_FALSE(opts.no_cursor_timeout().has_value());
+    CHECK_FALSE(opts.oplog_replay().has_value());
+    CHECK_FALSE(opts.exhaust().has_value());
     CHECK_FALSE(opts.projection().has_value());
     CHECK_FALSE(opts.read_preference().has_value());
     CHECK_FALSE(opts.read_concern().has_value());
@@ -241,6 +243,18 @@ TEST_CASE("no_cursor_timeout", "[mongocxx][v1][find_options]") {
     auto const v = GENERATE(false, true);
 
     CHECK(find_options{}.no_cursor_timeout(v).no_cursor_timeout() == v);
+}
+
+TEST_CASE("oplog_replay", "[mongocxx][v1][find_options]") {
+    auto const v = GENERATE(false, true);
+
+    CHECK(find_options{}.oplog_replay(v).oplog_replay() == v);
+}
+
+TEST_CASE("exhaust", "[mongocxx][v1][find_options]") {
+    auto const v = GENERATE(false, true);
+
+    CHECK(find_options{}.exhaust(v).exhaust() == v);
 }
 
 TEST_CASE("projection", "[mongocxx][v1][find_options]") {

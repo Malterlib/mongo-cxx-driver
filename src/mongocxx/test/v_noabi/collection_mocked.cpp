@@ -40,6 +40,7 @@
 
 #include <bsoncxx/test/catch.hh>
 
+#include <catch2/generators/catch_generators.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
 
 namespace {
@@ -453,6 +454,8 @@ TEST_CASE("find", "[mongocxx][v_noabi][collection]") {
     bsoncxx::stdx::optional<mongocxx::cursor::type> expected_cursor_type{};
     bsoncxx::stdx::optional<bsoncxx::types::bson_value::view> expected_hint{};
     bsoncxx::stdx::optional<bool> expected_no_cursor_timeout;
+    bsoncxx::stdx::optional<bool> expected_oplog_replay;
+    bsoncxx::stdx::optional<bool> expected_exhaust;
     bsoncxx::stdx::optional<bsoncxx::document::view> expected_sort{};
     bsoncxx::stdx::optional<read_preference> expected_read_preference{};
     bsoncxx::stdx::optional<bsoncxx::document::view> expected_read_concern{};
@@ -495,6 +498,17 @@ TEST_CASE("find", "[mongocxx][v_noabi][collection]") {
             }
             if (expected_no_cursor_timeout) {
                 REQUIRE(opts_view["noCursorTimeout"].get_bool().value == *expected_no_cursor_timeout);
+            }
+            // Unset is left out, unlike false
+            if (expected_oplog_replay) {
+                REQUIRE(opts_view["oplogReplay"].get_bool().value == *expected_oplog_replay);
+            } else {
+                REQUIRE(opts_view.find("oplogReplay") == opts_view.end());
+            }
+            if (expected_exhaust) {
+                REQUIRE(opts_view["exhaust"].get_bool().value == *expected_exhaust);
+            } else {
+                REQUIRE(opts_view.find("exhaust") == opts_view.end());
             }
             if (expected_sort) {
                 REQUIRE(opts_view["sort"].get_document() == *expected_sort);
@@ -561,6 +575,18 @@ TEST_CASE("find", "[mongocxx][v_noabi][collection]") {
         options::find opts;
         expected_no_cursor_timeout = true;
         opts.no_cursor_timeout(*expected_no_cursor_timeout);
+
+        REQUIRE_NOTHROW(mongo_coll.find(doc, opts));
+        REQUIRE(collection_find_called);
+    }
+
+    SECTION("Succeeds with oplog_replay and exhaust") {
+        auto const flag = GENERATE(false, true);
+        options::find opts;
+        expected_oplog_replay = flag;
+        expected_exhaust = !flag;
+        opts.oplog_replay(*expected_oplog_replay);
+        opts.exhaust(*expected_exhaust);
 
         REQUIRE_NOTHROW(mongo_coll.find(doc, opts));
         REQUIRE(collection_find_called);

@@ -131,6 +131,14 @@ class find {
             ret.no_cursor_timeout(*_no_cursor_timeout);
         }
 
+        if (_oplog_replay) {
+            ret.oplog_replay(*_oplog_replay);
+        }
+
+        if (_exhaust) {
+            ret.exhaust(*_exhaust);
+        }
+
         if (_projection) {
             ret.projection(bsoncxx::v1::document::value{to_v1(_projection->view())});
         }
@@ -639,6 +647,56 @@ class find {
     }
 
     ///
+    /// Increase performance when tailing the oplog. Normally for internal replication use only,
+    /// but can be useful for applications that mimic the replication behavior.
+    ///
+    /// @param oplog_replay
+    ///   When true enables optimizations for oplog tailing.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    find& oplog_replay(bool oplog_replay) {
+        _oplog_replay = oplog_replay;
+        return *this;
+    }
+
+    ///
+    /// Gets the current oplog_replay setting.
+    ///
+    /// @return The current oplog_replay setting.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    bsoncxx::v_noabi::stdx::optional<bool> const& oplog_replay() const {
+        return _oplog_replay;
+    }
+
+    ///
+    /// Stream the data down full blast in multiple “more” packages, on the assumption that the
+    /// client will fully read all data queried.
+    ///
+    /// @param exhaust
+    ///   When true enables exhaust semantics.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    find& exhaust(bool exhaust) {
+        _exhaust = exhaust;
+        return *this;
+    }
+
+    ///
+    /// Gets the current exhaust setting.
+    ///
+    /// @return The current exhaust setting.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    bsoncxx::v_noabi::stdx::optional<bool> const& exhaust() const {
+        return _exhaust;
+    }
+
+    ///
     /// Sets a projection which limits the returned fields for all matching documents.
     ///
     /// @param projection
@@ -874,6 +932,8 @@ class find {
     bsoncxx::v_noabi::stdx::optional<std::chrono::milliseconds> _max_time;
     bsoncxx::v_noabi::stdx::optional<bsoncxx::v_noabi::document::view_or_value> _min;
     bsoncxx::v_noabi::stdx::optional<bool> _no_cursor_timeout;
+    bsoncxx::v_noabi::stdx::optional<bool> _oplog_replay;
+    bsoncxx::v_noabi::stdx::optional<bool> _exhaust;
     bsoncxx::v_noabi::stdx::optional<bsoncxx::v_noabi::document::view_or_value> _projection;
     bsoncxx::v_noabi::stdx::optional<v_noabi::read_preference> _read_preference;
     bsoncxx::v_noabi::stdx::optional<v_noabi::read_concern> _read_concern;
