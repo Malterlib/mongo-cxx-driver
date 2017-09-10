@@ -434,6 +434,10 @@ class client {
     ///
     void reset();
 
+    /// Aborts connection by closing the underlaying OS handle
+    ///
+    void abort();
+    
    private:
     friend ::mongocxx::v_noabi::client_session;
     friend ::mongocxx::v_noabi::collection;

@@ -283,6 +283,11 @@ mongocxx::v_noabi::client_session client::start_session(
     const mongocxx::v_noabi::options::client_session& options) {
     return client_session(this, options);
 }
+   
+void client::abort()
+{
+   mongoc_client_abort(_get_impl().client_t);
+}
 
 void client::reset() {
     libmongoc::client_reset(_get_impl().client_t);
