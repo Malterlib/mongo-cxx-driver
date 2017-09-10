@@ -162,6 +162,11 @@ cursor client::list_databases(const bsoncxx::document::view_or_value filter) con
 class client_session client::start_session(const mongocxx::options::client_session& options) {
     return client_session(this, options);
 }
+   
+void client::abort()
+{
+   mongoc_client_abort(_get_impl().client_t);
+}
 
 class change_stream client::watch(const options::change_stream& options) {
     return watch(pipeline{}, options);

@@ -346,6 +346,10 @@ class MONGOCXX_API client {
     /// @}
     ///
 
+    /// Aborts connection by closing the underlaying OS handle
+    ///
+    void abort();
+	
    private:
     friend class collection;
     friend class database;
