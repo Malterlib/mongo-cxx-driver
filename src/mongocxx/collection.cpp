@@ -428,6 +428,14 @@ bsoncxx::builder::basic::document build_find_options_document(const options::fin
     if (options.no_cursor_timeout()) {
         options_builder.append(kvp("noCursorTimeout", *options.no_cursor_timeout()));
     }
+   
+    if (options.oplog_replay()) {
+        options_builder.append(kvp("oplogReplay", *options.oplog_replay()));
+    }
+
+    if (options.exhaust()) {
+        options_builder.append(kvp("exhaust", *options.exhaust()));
+    }
 
     if (options.projection()) {
         options_builder.append(
