@@ -145,6 +145,11 @@ cursor client::list_databases(const client_session& session) const {
 class client_session client::start_session(const mongocxx::options::client_session& options) {
     return client_session(this, options);
 }
+   
+void client::abort()
+{
+   mongoc_client_abort(_get_impl().client_t);
+}
 
 const client::impl& client::_get_impl() const {
     if (!_impl) {

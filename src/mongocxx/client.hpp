@@ -258,6 +258,10 @@ class MONGOCXX_API client {
     ///
     client_session start_session(const options::client_session& options = {});
 
+    /// Aborts connection by closing the underlaying OS handle
+    ///
+    void abort();
+	
    private:
     friend class collection;
     friend class database;
