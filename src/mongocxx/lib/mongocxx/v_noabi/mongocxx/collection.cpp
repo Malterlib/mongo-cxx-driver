@@ -361,6 +361,14 @@ bsoncxx::v_noabi::builder::basic::document build_find_options_document(options::
     if (auto const& min = options.min()) {
         options_builder.append(kvp("min", *min));
     }
+   
+    if (options.oplog_replay()) {
+        options_builder.append(kvp("oplogReplay", *options.oplog_replay()));
+    }
+
+    if (options.exhaust()) {
+        options_builder.append(kvp("exhaust", *options.exhaust()));
+    }
 
     if (auto const& nct = options.no_cursor_timeout()) {
         options_builder.append(kvp("noCursorTimeout", *nct));

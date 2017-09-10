@@ -95,6 +95,16 @@ find& find::no_cursor_timeout(bool no_cursor_timeout) {
     return *this;
 }
 
+find& find::oplog_replay(bool oplog_replay) {
+    _oplog_replay = oplog_replay;
+    return *this;
+}
+
+find& find::exhaust(bool exhaust) {
+    _exhaust = exhaust;
+    return *this;
+}
+
 find& find::projection(bsoncxx::v_noabi::document::view_or_value projection) {
     _projection = std::move(projection);
     return *this;
@@ -184,6 +194,14 @@ bsoncxx::v_noabi::stdx::optional<bsoncxx::v_noabi::document::view_or_value> cons
 
 bsoncxx::v_noabi::stdx::optional<bool> const& find::no_cursor_timeout() const {
     return _no_cursor_timeout;
+}
+
+bsoncxx::v_noabi::stdx::optional<bool> const& find::oplog_replay() const {
+    return _oplog_replay;
+}
+
+bsoncxx::v_noabi::stdx::optional<bool> const& find::exhaust() const {
+    return _exhaust;
 }
 
 bsoncxx::v_noabi::stdx::optional<bsoncxx::v_noabi::document::view_or_value> const& find::projection() const {
