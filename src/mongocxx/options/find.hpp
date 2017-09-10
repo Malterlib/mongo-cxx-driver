@@ -318,6 +318,46 @@ class MONGOCXX_API find {
     const stdx::optional<bool>& no_cursor_timeout() const;
 
     ///
+    /// Increase performance when tailing the oplog. Normally for internal replication use only,
+    /// but can be useful for applications that mimic the replication behavior.
+    ///
+    /// @param oplog_replay
+    ///   When true enables optimizations for oplog tailing.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    find& oplog_replay(bool oplog_replay);
+
+    ///
+    /// Gets the current oplog_replay setting.
+    ///
+    /// @return The current oplog_replay setting.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    const stdx::optional<bool>& oplog_replay() const;
+
+    ///
+    /// Stream the data down full blast in multiple “more” packages, on the assumption that the
+	/// client will fully read all data queried.
+    ///
+    /// @param exhaust
+    ///   When true enables exhaust semantics.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    find& exhaust(bool exhaust);
+
+    ///
+    /// Gets the current exhaust setting.
+    ///
+    /// @return The current exhaust setting.
+    ///
+    /// @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#wire-op-query
+    ///
+    const stdx::optional<bool>& exhaust() const;
+	
+    ///
     /// Sets a projection which limits the returned fields for all matching documents.
     ///
     /// @param projection
@@ -479,6 +519,8 @@ class MONGOCXX_API find {
     stdx::optional<bsoncxx::document::view_or_value> _min;
     stdx::optional<bsoncxx::document::view_or_value> _modifiers;
     stdx::optional<bool> _no_cursor_timeout;
+    stdx::optional<bool> _oplog_replay;
+    stdx::optional<bool> _exhaust;
     stdx::optional<bsoncxx::document::view_or_value> _projection;
     stdx::optional<class read_preference> _read_preference;
     stdx::optional<bool> _return_key;
