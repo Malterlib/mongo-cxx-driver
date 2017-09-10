@@ -58,6 +58,8 @@ namespace v1 {
 /// - `max`
 /// - `min`
 /// - `no_cursor_timeout` ("noCursorTimeout")
+/// - `oplog_replay` ("oplogReplay")
+/// - `exhaust`
 /// - `projection`
 /// - `read_preference` ("readPreference")
 /// - `read_concern` ("readConcern")
@@ -255,6 +257,26 @@ class find_options {
     /// Return the current "noCursorTimeout" field.
     ///
     MONGOCXX_ABI_EXPORT_CDECL(bsoncxx::v1::stdx::optional<bool>) no_cursor_timeout() const;
+
+    ///
+    /// Set the "oplogReplay" field.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(find_options&) oplog_replay(bool v);
+
+    ///
+    /// Return the current "oplogReplay" field.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(bsoncxx::v1::stdx::optional<bool>) oplog_replay() const;
+
+    ///
+    /// Set the "exhaust" field.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(find_options&) exhaust(bool v);
+
+    ///
+    /// Return the current "exhaust" field.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(bsoncxx::v1::stdx::optional<bool>) exhaust() const;
 
     ///
     /// Set the "projection" field.

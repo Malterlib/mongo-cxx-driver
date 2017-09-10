@@ -68,6 +68,8 @@ find::find(v1::find_options opts)
           return {};
       }()},
       _no_cursor_timeout{opts.no_cursor_timeout()},
+      _oplog_replay{opts.oplog_replay()},
+      _exhaust{opts.exhaust()},
       _projection{[&]() -> decltype(_projection) {
           if (auto& opt = v1::find_options::internal::projection(opts)) {
               return bsoncxx::v_noabi::from_v1(std::move(*opt));

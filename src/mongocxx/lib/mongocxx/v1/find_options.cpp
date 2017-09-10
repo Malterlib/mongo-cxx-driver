@@ -51,6 +51,8 @@ class find_options::impl {
     bsoncxx::v1::stdx::optional<std::chrono::milliseconds> _max_time;
     bsoncxx::v1::stdx::optional<bsoncxx::v1::document::value> _min;
     bsoncxx::v1::stdx::optional<bool> _no_cursor_timeout;
+    bsoncxx::v1::stdx::optional<bool> _oplog_replay;
+    bsoncxx::v1::stdx::optional<bool> _exhaust;
     bsoncxx::v1::stdx::optional<bsoncxx::v1::document::value> _projection;
     bsoncxx::v1::stdx::optional<v1::read_preference> _read_preference;
     bsoncxx::v1::stdx::optional<v1::read_concern> _read_concern;
@@ -234,6 +236,24 @@ find_options& find_options::no_cursor_timeout(bool v) {
 
 bsoncxx::v1::stdx::optional<bool> find_options::no_cursor_timeout() const {
     return impl::with(this)->_no_cursor_timeout;
+}
+
+find_options& find_options::oplog_replay(bool v) {
+    impl::with(this)->_oplog_replay = v;
+    return *this;
+}
+
+bsoncxx::v1::stdx::optional<bool> find_options::oplog_replay() const {
+    return impl::with(this)->_oplog_replay;
+}
+
+find_options& find_options::exhaust(bool v) {
+    impl::with(this)->_exhaust = v;
+    return *this;
+}
+
+bsoncxx::v1::stdx::optional<bool> find_options::exhaust() const {
+    return impl::with(this)->_exhaust;
 }
 
 find_options& find_options::projection(bsoncxx::v1::document::value v) {
