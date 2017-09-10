@@ -203,6 +203,11 @@ class MONGOCXX_API client {
     ///
     cursor list_databases() const;
 
+    ///
+    /// Aborts connection by closing the underlaying OS handle
+    ///
+    void abort();
+	
    private:
     friend class collection;
     friend class database;
