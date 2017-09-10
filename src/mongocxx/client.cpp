@@ -137,6 +137,11 @@ cursor client::list_databases() const {
 
     return cursor(result);
 }
+   
+void client::abort()
+{
+   mongoc_client_abort(_get_impl().client_t);
+}
 
 const client::impl& client::_get_impl() const {
     if (!_impl) {
