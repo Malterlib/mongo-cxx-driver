@@ -314,6 +314,14 @@ bsoncxx::document::value build_find_options_document(const options::find& option
     if (options.no_cursor_timeout()) {
         options_builder.append(kvp("noCursorTimeout", *options.no_cursor_timeout()));
     }
+   
+    if (options.oplog_replay()) {
+        options_builder << "oplogReplay" << *options.oplog_replay();
+    }
+
+    if (options.exhaust()) {
+        options_builder << "exhaust" << *options.exhaust();
+    }
 
     if (options.projection()) {
         options_builder.append(
