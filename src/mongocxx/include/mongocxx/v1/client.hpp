@@ -302,6 +302,14 @@ class client {
     MONGOCXX_ABI_EXPORT_CDECL(void) reset();
 
     ///
+    /// Permanently cancel the socket operations of a standalone client.
+    ///
+    /// May be called from another thread. Keep the client alive until this call returns and all operations stop. A
+    /// client obtained from a @ref v1::pool must be idle.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(void) abort();
+
+    ///
     /// Errors codes which may be returned by @ref mongocxx::v1::client.
     ///
     enum class errc {

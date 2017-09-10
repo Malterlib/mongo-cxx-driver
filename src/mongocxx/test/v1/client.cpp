@@ -2204,6 +2204,21 @@ TEST_CASE("reset", "[mongocxx][v1][client]") {
     (void)mocks.make().reset();
 }
 
+TEST_CASE("abort", "[mongocxx][v1][client]") {
+    client_mocks_type mocks;
+
+    bool called = false;
+
+    auto client_abort = libmongoc::client_abort.create_instance();
+    client_abort->interpose([&](mongoc_client_t* ptr) -> void {
+        CHECK(ptr == mocks.client_id);
+        called = true;
+    });
+
+    mocks.make().abort();
+    CHECK(called);
+}
+
 TEST_CASE("append_metadata", "[mongocxx][v1][client]") {
     client_mocks_type mocks;
 

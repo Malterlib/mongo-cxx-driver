@@ -342,6 +342,10 @@ void client::append_metadata(
     v_noabi::throw_exception<v_noabi::operation_exception>(ex);
 }
 
+void client::abort() {
+    check_moved_from(_client).abort();
+}
+
 void client::reset() {
     check_moved_from(_client).reset();
 }

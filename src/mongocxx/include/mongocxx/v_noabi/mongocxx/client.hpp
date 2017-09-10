@@ -527,6 +527,14 @@ class client {
     ///
     MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(void) reset();
 
+    ///
+    /// Permanently cancel the socket operations of a standalone client.
+    ///
+    /// @see
+    /// - @ref mongocxx::v1::client::abort
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(void) abort();
+
     class internal;
 
    private:

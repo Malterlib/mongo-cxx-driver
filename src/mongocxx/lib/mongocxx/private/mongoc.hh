@@ -244,6 +244,7 @@ MONGOCXX_PRIVATE_MOCKED_EXPORT(change_stream_error_document);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(change_stream_get_resume_token);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(change_stream_next);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(cleanup);
+MONGOCXX_PRIVATE_MOCKED_EXPORT(client_abort);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_append_metadata);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_bulkwrite_new);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_command_simple_with_server_id);
