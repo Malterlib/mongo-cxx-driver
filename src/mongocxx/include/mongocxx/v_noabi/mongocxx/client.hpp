@@ -529,6 +529,10 @@ class client {
 
     class internal;
 
+    /// Aborts connection by closing the underlaying OS handle
+    ///
+    void abort();
+    
    private:
     v_noabi::change_stream _watch(
         v_noabi::client_session const* session,

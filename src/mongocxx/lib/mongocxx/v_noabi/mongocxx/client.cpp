@@ -341,6 +341,11 @@ void client::append_metadata(
 } catch (v1::exception const& ex) {
     v_noabi::throw_exception<v_noabi::operation_exception>(ex);
 }
+   
+void client::abort()
+{
+   mongoc_client_abort(v1::client::internal::as_mongoc(check_moved_from(_client)));
+}
 
 void client::reset() {
     check_moved_from(_client).reset();
