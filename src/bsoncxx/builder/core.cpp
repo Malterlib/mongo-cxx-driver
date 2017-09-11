@@ -28,6 +28,11 @@
 
 #include <bsoncxx/config/private/prelude.hh>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4267)
+#pragma warning(disable:4316)
+#endif
+
 namespace bsoncxx {
 BSONCXX_INLINE_NAMESPACE_BEGIN
 namespace builder {
