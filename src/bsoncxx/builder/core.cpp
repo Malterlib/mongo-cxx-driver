@@ -28,6 +28,11 @@
 
 #include <bsoncxx/config/private/prelude.hh>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4267)
+#pragma warning(disable:4316)
+#endif
+
 namespace bsoncxx {
 BSONCXX_INLINE_NAMESPACE_BEGIN
 namespace builder {
@@ -117,7 +122,7 @@ class core::impl {
 
     stdx::string_view next_key() {
         if (is_array()) {
-            _itoa_key = _stack.empty() ? _n++ : _stack.back().n++;
+             _itoa_key = _stack.empty() ? _n++ : _stack.back().n++;
             _user_key_view = stdx::string_view{_itoa_key.c_str(), _itoa_key.length()};
         } else if (!_has_user_key) {
             throw bsoncxx::exception{error_code::k_need_key};
@@ -287,8 +292,8 @@ void core::append(const types::b_null&) {
 void core::append(const types::b_regex& value) {
     stdx::string_view key = _impl->next_key();
 
-    bson_append_regex(_impl->back(), key.data(), key.length(), value.regex.to_string().data(),
-                      value.options.to_string().data());
+    bson_append_regex(_impl->back(), key.data(), key.length(), stdx::string_view_to_str(value.regex).data(),
+                      stdx::string_view_to_str(value.options).data());
 }
 
 void core::append(const types::b_dbpointer& value) {
@@ -298,13 +303,13 @@ void core::append(const types::b_dbpointer& value) {
     std::memcpy(&oid.bytes, value.value.bytes(), sizeof(oid.bytes));
 
     bson_append_dbpointer(_impl->back(), key.data(), key.length(),
-                          value.collection.to_string().data(), &oid);
+                          stdx::string_view_to_str(value.collection).data(), &oid);
 }
 
 void core::append(const types::b_code& value) {
     stdx::string_view key = _impl->next_key();
 
-    bson_append_code(_impl->back(), key.data(), key.length(), value.code.to_string().data());
+    bson_append_code(_impl->back(), key.data(), key.length(), stdx::string_view_to_str(value.code).data());
 }
 
 void core::append(const types::b_symbol& value) {
@@ -321,7 +326,7 @@ void core::append(const types::b_codewscope& value) {
     bson_init_static(&bson, value.scope.data(), value.scope.length());
 
     bson_append_code_with_scope(_impl->back(), key.data(), key.length(),
-                                value.code.to_string().data(), &bson);
+                                stdx::string_view_to_str(value.code).data(), &bson);
 }
 
 void core::append(const types::b_int32& value) {

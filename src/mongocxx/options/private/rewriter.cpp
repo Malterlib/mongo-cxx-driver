@@ -55,7 +55,7 @@ void convert_comment_modifier(find* options, bsoncxx::document::element ele) {
         throw logic_error{error_code::k_invalid_parameter, "string type required for $comment"};
     }
     if (!options->comment()) {
-        options->comment(std::string{ele.get_utf8().value.to_string()});
+        options->comment(std::string{stdx::string_view_to_str(ele.get_utf8().value)});
     }
 }
 
@@ -67,7 +67,7 @@ void convert_hint_modifier(find* options, bsoncxx::document::element ele) {
             break;
         }
         case bsoncxx::type::k_utf8: {
-            hint = mongocxx::hint{std::string{ele.get_utf8().value.to_string()}};
+            hint = mongocxx::hint{std::string{stdx::string_view_to_str(ele.get_utf8().value)}};
             break;
         }
         default: {
@@ -194,7 +194,7 @@ find rewriter::rewrite_find_modifiers(const find& options) {
         } else {
             throw logic_error{
                 error_code::k_invalid_parameter,
-                std::string{"unrecognized key in modifiers: "} + ele.key().to_string()};
+                std::string{"unrecognized key in modifiers: "} + stdx::string_view_to_str(ele.key())};
         }
     }
 

@@ -72,7 +72,7 @@ void read_concern::acknowledge_level(read_concern::level rc_level) {
 void read_concern::acknowledge_string(stdx::string_view rc_string) {
     // libmongoc uses a NULL level to mean "use the server's default read_concern."
     libmongoc::read_concern_set_level(_impl->read_concern_t,
-                                      rc_string.empty() ? NULL : rc_string.to_string().data());
+                                      rc_string.empty() ? NULL : stdx::string_view_to_str(rc_string).data());
 }
 
 read_concern::level read_concern::acknowledge_level() const {

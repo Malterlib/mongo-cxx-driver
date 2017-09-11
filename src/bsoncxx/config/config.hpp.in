@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #cmakedefine BSONCXX_POLY_USE_STD_EXPERIMENTAL
+#cmakedefine BSONCXX_POLY_USE_STD
 #cmakedefine BSONCXX_POLY_USE_MNMLSTC
 #cmakedefine BSONCXX_POLY_USE_SYSTEM_MNMLSTC
 #cmakedefine BSONCXX_POLY_USE_BOOST

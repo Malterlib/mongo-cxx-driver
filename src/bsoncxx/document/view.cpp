@@ -127,7 +127,7 @@ view::const_iterator view::find(stdx::string_view key) const {
         return cend();
     }
 
-    if (!bson_iter_init_find(&iter, &b, key.to_string().data())) {
+    if (!bson_iter_init_find(&iter, &b, stdx::string_view_to_str(key).data())) {
         return cend();
     }
 

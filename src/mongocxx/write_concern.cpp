@@ -86,7 +86,7 @@ void write_concern::acknowledge_level(write_concern::level confirm_level) {
 }
 
 void write_concern::tag(stdx::string_view confirm_from) {
-    libmongoc::write_concern_set_wtag(_impl->write_concern_t, confirm_from.to_string().data());
+    libmongoc::write_concern_set_wtag(_impl->write_concern_t, stdx::string_view_to_str(confirm_from).data());
 }
 
 void write_concern::majority(std::chrono::milliseconds timeout) {

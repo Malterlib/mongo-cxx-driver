@@ -26,7 +26,7 @@ BSONCXX_INLINE_NAMESPACE_BEGIN
 
 decimal128::decimal128(stdx::string_view str) {
     bson_decimal128_t d128;
-    if (!bson_decimal128_from_string(str.to_string().c_str(), &d128)) {
+    if (!bson_decimal128_from_string(stdx::string_view_to_str(str).c_str(), &d128)) {
         throw bsoncxx::exception{error_code::k_invalid_decimal128};
     }
     _high = d128.high;

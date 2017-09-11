@@ -59,6 +59,8 @@ class scoped_bson_t {
     // The internal bson_t is considered initialized.
     //
     explicit scoped_bson_t(bsoncxx::document::view_or_value doc);
+    explicit scoped_bson_t(bsoncxx::document::value doc);
+    explicit scoped_bson_t(bsoncxx::document::view doc);
 
     //
     // Constructs a new scoped_bson_t from an optional document view_or_value.

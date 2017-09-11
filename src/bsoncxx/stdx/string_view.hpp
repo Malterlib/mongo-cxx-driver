@@ -43,6 +43,9 @@ BSONCXX_INLINE_NAMESPACE_BEGIN
 namespace stdx {
 
 using string_view = ::boost::string_ref;
+	inline auto string_view_to_str(string_view const &string_view) {
+		return string_view.to_string();
+	}
 
 }  // namespace stdx
 BSONCXX_INLINE_NAMESPACE_END
@@ -57,7 +60,25 @@ BSONCXX_INLINE_NAMESPACE_BEGIN
 namespace stdx {
 
 using ::std::experimental::string_view;
+	inline auto string_view_to_str(string_view const &string_view) {
+		return string_view.to_string();
+	}
+}  // namespace stdx
+BSONCXX_INLINE_NAMESPACE_END
+}  // namespace bsoncxx
 
+#elif defined(BSONCXX_POLY_USE_STD)
+
+#include <string_view>
+
+namespace bsoncxx {
+BSONCXX_INLINE_NAMESPACE_BEGIN
+namespace stdx {
+
+using ::std::string_view;
+	inline auto string_view_to_str(string_view const &string_view) {
+		return std::string(string_view.cbegin(), string_view.cend());
+	}
 }  // namespace stdx
 BSONCXX_INLINE_NAMESPACE_END
 }  // namespace bsoncxx
