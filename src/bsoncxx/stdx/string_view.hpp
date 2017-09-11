@@ -70,6 +70,7 @@ BSONCXX_INLINE_NAMESPACE_END
 #elif defined(BSONCXX_POLY_USE_STD)
 
 #include <string_view>
+#include <string>
 
 namespace bsoncxx {
 BSONCXX_INLINE_NAMESPACE_BEGIN
@@ -77,7 +78,7 @@ namespace stdx {
 
 using ::std::string_view;
 	inline auto string_view_to_str(string_view const &string_view) {
-		return std::string(string_view.cbegin(), string_view.cend());
+		return std::string{string_view};
 	}
 }  // namespace stdx
 BSONCXX_INLINE_NAMESPACE_END

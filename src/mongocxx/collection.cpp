@@ -316,11 +316,11 @@ bsoncxx::document::value build_find_options_document(const options::find& option
     }
    
     if (options.oplog_replay()) {
-        options_builder << "oplogReplay" << *options.oplog_replay();
+        options_builder.append(kvp("oplogReplay", *options.oplog_replay()));
     }
 
     if (options.exhaust()) {
-        options_builder << "exhaust" << *options.exhaust();
+        options_builder.append(kvp("exhaust", *options.exhaust()));
     }
 
     if (options.projection()) {

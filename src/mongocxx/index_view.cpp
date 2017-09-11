@@ -62,7 +62,7 @@ void index_view::drop_one(const bsoncxx::document::view_or_value& keys,
     bsoncxx::document::view opts_view = index_options.view();
 
     if (opts_view["name"]) {
-        drop_one(opts_view["name"].get_utf8().value.to_string(), options);
+        drop_one(stdx::string_view_to_str(opts_view["name"].get_utf8().value), options);
     } else {
         drop_one(_get_impl().get_index_name_from_keys(keys), options);
     }
