@@ -19,6 +19,7 @@
 #include <bsoncxx/stdx/optional.hpp>
 #include <bsoncxx/string/view_or_value.hpp>
 #include <bsoncxx/types/value.hpp>
+#include <bsoncxx/private/suppress_deprecation_warnings.hh>
 #include <mongocxx/stdx.hpp>
 
 #include <mongocxx/config/prelude.hpp>
@@ -156,7 +157,9 @@ MONGOCXX_INLINE hint::operator bsoncxx::types::value() const {
 }
 
 MONGOCXX_INLINE hint::operator bsoncxx::document::value() const {
-    return to_document();
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_BEGIN;
+	return to_document();
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_END;
 }
 
 MONGOCXX_INLINE_NAMESPACE_END

@@ -16,6 +16,7 @@
 
 #include <bsoncxx/document/view_or_value.hpp>
 #include <bsoncxx/stdx/optional.hpp>
+#include <bsoncxx/private/suppress_deprecation_warnings.hh>
 #include <mongocxx/pipeline.hpp>
 #include <mongocxx/stdx.hpp>
 #include <mongocxx/write_concern.hpp>
@@ -133,7 +134,9 @@ class MONGOCXX_API create_view {
 };
 
 MONGOCXX_INLINE create_view::operator bsoncxx::document::value() const {
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_BEGIN;
     return to_document();
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_END;
 }
 
 }  // namespace options

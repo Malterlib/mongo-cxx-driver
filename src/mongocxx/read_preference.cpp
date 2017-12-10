@@ -15,6 +15,7 @@
 #include <mongocxx/read_preference.hpp>
 
 #include <bsoncxx/stdx/make_unique.hpp>
+#include <bsoncxx/private/suppress_deprecation_warnings.hh>
 #include <mongocxx/exception/error_code.hpp>
 #include <mongocxx/exception/logic_error.hpp>
 #include <mongocxx/private/conversions.hh>
@@ -51,10 +52,12 @@ read_preference::read_preference(read_mode mode)
     : _impl(stdx::make_unique<impl>(
           libmongoc::read_prefs_new(libmongoc::conversions::read_mode_t_from_read_mode(mode)))) {}
 
+BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_BEGIN;
 read_preference::read_preference(read_mode mode, bsoncxx::document::view_or_value tags)
     : read_preference(mode) {
     read_preference::tags(std::move(tags));
 }
+BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_END;
 
 read_preference::~read_preference() = default;
 

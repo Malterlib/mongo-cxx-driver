@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef _MSC_VER
+#pragma warning(disable:4267)
+#pragma warning(disable:4316)
+#endif
+
 #include <bsoncxx/builder/core.hpp>
 
 #include <cstring>
@@ -27,11 +32,6 @@
 #include <bsoncxx/types/value.hpp>
 
 #include <bsoncxx/config/private/prelude.hh>
-
-#ifdef _MSC_VER
-#pragma warning(disable:4267)
-#pragma warning(disable:4316)
-#endif
 
 namespace bsoncxx {
 BSONCXX_INLINE_NAMESPACE_BEGIN

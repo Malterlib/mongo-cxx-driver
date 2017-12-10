@@ -133,7 +133,9 @@ bsoncxx::document::value create_collection::to_document() const {
     }
 
     if (_validation) {
+		BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_BEGIN;
         doc.append(concatenate(_validation->to_document()));
+		BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_END;
     }
 
     return doc.extract();

@@ -16,6 +16,7 @@
 
 #include <bsoncxx/document/view_or_value.hpp>
 #include <bsoncxx/stdx/optional.hpp>
+#include <bsoncxx/private/suppress_deprecation_warnings.hh>
 #include <mongocxx/stdx.hpp>
 #include <mongocxx/validation_criteria.hpp>
 
@@ -263,7 +264,9 @@ class MONGOCXX_API create_collection {
 };
 
 MONGOCXX_INLINE create_collection::operator bsoncxx::document::value() const {
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_BEGIN;
     return to_document();
+	BSONCXX_SUPPRESS_DEPRECATION_WARNINGS_END;
 }
 
 }  // namespace options
