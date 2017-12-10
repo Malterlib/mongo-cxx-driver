@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef _MSC_VER
+#pragma warning(disable:4267)
+#pragma warning(disable:4316)
+#endif
+
 #include <bsoncxx/builder/core.hpp>
 
 #include <cstring>
