@@ -230,7 +230,7 @@ bsoncxx::document::value as_bson(const mongocxx::options::change_stream& cs) {
         if ((count < 0) || (count >= std::numeric_limits<std::uint32_t>::max())) {
             throw mongocxx::logic_error{mongocxx::error_code::k_invalid_parameter};
         }
-        out.append(bsoncxx::builder::basic::kvp("maxAwaitTimeMS", count));
+        out.append(bsoncxx::builder::basic::kvp("maxAwaitTimeMS", std::int64_t{count}));
     }
 
     return out.extract();
