@@ -75,9 +75,12 @@ typename std::aligned_storage<sizeof(instance), alignof(instance)>::type sentine
 std::atomic<instance*> current_instance{nullptr};
 static_assert(std::is_standard_layout<decltype(current_instance)>::value,
               "Must be standard layout");
+
+#if !defined(_MSC_VER)
 #if (!defined(__GNUC__) || (defined(__clang__) && !defined(__GLIBCXX__))) || (__GNUC__ >= 5)
 static_assert(std::is_trivially_constructible<decltype(current_instance)>::value,
               "Must be trivially constructible");
+#endif
 #endif
 static_assert(std::is_trivially_destructible<decltype(current_instance)>::value,
               "Must be trivially destructible");
