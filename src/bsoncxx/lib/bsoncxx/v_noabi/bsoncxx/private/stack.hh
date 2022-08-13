@@ -88,7 +88,7 @@ class stack {
     }
 
    private:
-    typename std::aligned_storage<sizeof(T)>::type _object_memory[size];
+	alignas(std::alignment_of_v<T>) std::byte _object_memory[size * sizeof(T)];
 
     std::list<T*> _buckets;
 
