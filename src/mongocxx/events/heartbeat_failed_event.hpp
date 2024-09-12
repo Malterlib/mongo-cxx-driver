@@ -15,6 +15,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 #include <bsoncxx/stdx/string_view.hpp>
 
