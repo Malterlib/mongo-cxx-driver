@@ -57,27 +57,6 @@ set(LIBMONGOC_REQUIRED_VERSION 1.25.0)
 set(LIBMONGOC_DOWNLOAD_VERSION 1.25.0)
 set(LIBMONGOC_REQUIRED_ABI_VERSION 1.0)
 
-set(NEED_DOWNLOAD_C_DRIVER false)
-
-if(TARGET mongoc_shared OR TARGET mongoc_static)
-    # If these targets exist, then libmongoc has already been included as a project
-    # sub-directory
-    message(STATUS "Found libmongoc targets declared in current build scope; version not checked")
-else()
-    find_package(mongoc-${LIBMONGOC_REQUIRED_ABI_VERSION} ${LIBMONGOC_REQUIRED_VERSION} QUIET)
-
-    if(mongoc-${LIBMONGOC_REQUIRED_ABI_VERSION}_FOUND)
-        message(STATUS "Found libmongoc ${mongoc-${LIBMONGOC_REQUIRED_ABI_VERSION}_VERSION}, don't need to download it.")
-    else()
-        set(NEED_DOWNLOAD_C_DRIVER true CACHE INTERNAL "")
-    endif()
-endif()
-
-if(NEED_DOWNLOAD_C_DRIVER)
-    message(STATUS "No MongoDB C Driver path provided via CMAKE_PREFIX_PATH, will download C driver version ${LIBMONGOC_DOWNLOAD_VERSION} from the internet.")
-    include(FetchMongoC)
-endif()
-
 # All of our target compilers support the deprecated
 # attribute. Normally, we would just let the GenerateExportHeader
 # subsystem do this via configure check, but there appears to be a
