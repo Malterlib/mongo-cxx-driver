@@ -319,8 +319,6 @@ if(ENABLE_TESTS)
     enable_testing()
 endif()
 
-include(FetchMongoC)
-
 add_subdirectory(src)
 
 add_subdirectory(examples EXCLUDE_FROM_ALL)
