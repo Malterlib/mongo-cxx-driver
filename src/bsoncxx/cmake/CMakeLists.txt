@@ -15,7 +15,7 @@
 include(CMakePackageConfigHelpers)
 
 # Generate and install modern CMake package config files.
-if(1)
+if(0)
     write_basic_package_version_file(
         bsoncxx-config-version.cmake
         VERSION $CACHE{BSONCXX_VERSION}
@@ -55,7 +55,7 @@ if(1)
 endif()
 
 # Generate and install pkg-config package config files.
-if(1)
+if(0)
     function(bsoncxx_install_pkg_config TARGET LINK_TYPE)
         get_target_property(output_name ${TARGET} OUTPUT_NAME)
 
