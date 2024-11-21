@@ -532,7 +532,9 @@ class client {
     /// Aborts connection by closing the underlaying OS handle
     ///
     void abort();
-    
+
+	int get_negotiated_curve();
+
    private:
     v_noabi::change_stream _watch(
         v_noabi::client_session const* session,

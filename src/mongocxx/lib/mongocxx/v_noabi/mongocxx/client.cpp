@@ -347,6 +347,11 @@ void client::abort()
    mongoc_client_abort(v1::client::internal::as_mongoc(check_moved_from(_client)));
 }
 
+int client::get_negotiated_curve()
+{
+   return mongoc_client_get_negotiated_curve(v1::client::internal::as_mongoc(check_moved_from(_client)));
+}
+
 void client::reset() {
     check_moved_from(_client).reset();
 }
