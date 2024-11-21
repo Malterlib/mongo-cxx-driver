@@ -319,6 +319,7 @@ MONGOCXX_PRIVATE_MOCKED_EXPORT(client_find_databases_with_opts);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_collection);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_database_names_with_opts);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_database);
+MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_negotiated_curve);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_read_concern);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_read_prefs);
 MONGOCXX_PRIVATE_MOCKED_EXPORT(client_get_uri);

@@ -310,6 +310,14 @@ class client {
     MONGOCXX_ABI_EXPORT_CDECL(void) abort();
 
     ///
+    /// Return the TLS key exchange group that the connection of the client negotiated, as the TLS library of the driver
+    /// reports it: with OpenSSL, as `SSL_get_negotiated_group` returns it, an OpenSSL NID, or for a group without a NID,
+    /// `TLSEXT_nid_unknown` combined with the group's ID. Other libraries, as BoringSSL, number the groups with their own
+    /// NIDs. 0 means that no group is available, as for a TLS library that doesn't report it.
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL(int) get_negotiated_curve();
+
+    ///
     /// Errors codes which may be returned by @ref mongocxx::v1::client.
     ///
     enum class errc {

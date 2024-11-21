@@ -346,6 +346,10 @@ void client::abort() {
     check_moved_from(_client).abort();
 }
 
+int client::get_negotiated_curve() {
+    return check_moved_from(_client).get_negotiated_curve();
+}
+
 void client::reset() {
     check_moved_from(_client).reset();
 }

@@ -535,6 +535,14 @@ class client {
     ///
     MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(void) abort();
 
+    ///
+    /// Return the TLS key exchange group that the connection of the client negotiated.
+    ///
+    /// @see
+    /// - @ref mongocxx::v1::client::get_negotiated_curve
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(int) get_negotiated_curve();
+
     class internal;
 
    private:
