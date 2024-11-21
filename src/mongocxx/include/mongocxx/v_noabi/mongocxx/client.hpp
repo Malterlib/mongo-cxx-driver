@@ -457,7 +457,9 @@ class client {
     /// Aborts connection by closing the underlaying OS handle
     ///
     void abort();
-    
+
+	int get_negotiated_curve();
+
    private:
     friend ::mongocxx::v_noabi::client_session;
     friend ::mongocxx::v_noabi::collection;
