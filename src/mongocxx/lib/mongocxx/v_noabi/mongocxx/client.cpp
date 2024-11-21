@@ -289,6 +289,11 @@ void client::abort()
    mongoc_client_abort(_get_impl().client_t);
 }
 
+int client::get_negotiated_curve()
+{
+   return mongoc_client_get_negotiated_curve(_get_impl().client_t);
+}
+
 void client::reset() {
     libmongoc::client_reset(_get_impl().client_t);
 }
