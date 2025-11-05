@@ -16,6 +16,8 @@ cmake_minimum_required(VERSION 3.15...4.0)
 
 project(MONGO_CXX_DRIVER LANGUAGES CXX)
 
+add_subdirectory("mongo-c-driver")
+
 set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
     ${PROJECT_SOURCE_DIR}/cmake
