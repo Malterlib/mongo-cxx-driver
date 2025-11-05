@@ -16,13 +16,30 @@ cmake_minimum_required(VERSION 3.15...4.0)
 
 project(MONGO_CXX_DRIVER LANGUAGES CXX)
 
+# The tests are off unless asked for, as below. Declared here, so that the C driver, whose tests are on by default, doesn't
+# turn them on.
+option(BUILD_TESTING "When ENABLE_TESTS=ON, include test targets in the \"all\" target")
+option(ENABLE_TESTS "Enable building test targets." OFF)
+
+# BUILD_VERSION is the version of this driver, and the C driver would take it instead of its own. A variable of a function
+# gives it the version in its VERSION_CURRENT, and keeps the version that a parent project sets. The tests of the C driver
+# stay out of those of this driver, as with cmake/FetchMongoC.cmake.
+function(mongocxx_add_c_driver)
+    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/mongo-c-driver/VERSION_CURRENT" BUILD_VERSION LIMIT_COUNT 1)
+    set(ENABLE_TESTS OFF)
+    set(BUILD_TESTING OFF)
+    # Without its tests, the C driver writes no CTestTestfile.cmake, so that of a build directory that had them is removed.
+    # CTest would otherwise run tests that aren't built.
+    file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/mongo-c-driver/CTestTestfile.cmake")
+    add_subdirectory("mongo-c-driver")
+endfunction()
+mongocxx_add_c_driver()
+
 set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
     ${PROJECT_SOURCE_DIR}/cmake
     ${PROJECT_SOURCE_DIR}/cmake/make_dist
 )
-
-option(BUILD_TESTING "When ENABLE_TESTS=ON, include test targets in the \"all\" target")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # https://gcc.gnu.org/onlinedocs/libstdc++/manual/status.html
