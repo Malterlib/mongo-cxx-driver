@@ -454,7 +454,9 @@ class client {
     ///
     MONGOCXX_ABI_EXPORT_CDECL(void) reset();
 
-    /// Aborts connection by closing the underlaying OS handle
+    /// Permanently cancels a standalone client's socket operations. May be called
+    /// from another thread. Keep the client alive until this call returns and
+    /// all operations stop. Pooled clients must be idle when aborted.
     ///
     void abort();
 
