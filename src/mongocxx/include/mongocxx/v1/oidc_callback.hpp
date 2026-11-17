@@ -16,8 +16,9 @@
 
 #include <mongocxx/v1/detail/prelude.hpp>
 
-#include <mongocxx/v1/oidc_callback_params-fwd.hpp>
-#include <mongocxx/v1/oidc_credential-fwd.hpp>
+// Complete, as std::function needs the types of its signature with the ABI of libc++ that Malterlib uses
+#include <mongocxx/v1/oidc_callback_params.hpp>
+#include <mongocxx/v1/oidc_credential.hpp>
 
 #include <mongocxx/v1/config/export.hpp>
 
