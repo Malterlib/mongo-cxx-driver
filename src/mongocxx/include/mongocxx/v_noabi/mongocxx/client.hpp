@@ -527,15 +527,23 @@ class client {
     ///
     MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(void) reset();
 
-    class internal;
-
-    /// Permanently cancels a standalone client's socket operations. May be called
-    /// from another thread. Keep the client alive until this call returns and
-    /// all operations stop. Pooled clients must be idle when aborted.
     ///
-    void abort();
+    /// Permanently cancel the socket operations of a standalone client.
+    ///
+    /// @see
+    /// - @ref mongocxx::v1::client::abort
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(void) abort();
 
-	int get_negotiated_curve();
+    ///
+    /// Return the TLS key exchange group that the connection of the client negotiated.
+    ///
+    /// @see
+    /// - @ref mongocxx::v1::client::get_negotiated_curve
+    ///
+    MONGOCXX_ABI_EXPORT_CDECL_UNSTABLE(int) get_negotiated_curve();
+
+    class internal;
 
    private:
     v_noabi::change_stream _watch(

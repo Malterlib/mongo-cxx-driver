@@ -341,15 +341,13 @@ void client::append_metadata(
 } catch (v1::exception const& ex) {
     v_noabi::throw_exception<v_noabi::operation_exception>(ex);
 }
-   
-void client::abort()
-{
-   mongoc_client_abort(v1::client::internal::as_mongoc(check_moved_from(_client)));
+
+void client::abort() {
+    check_moved_from(_client).abort();
 }
 
-int client::get_negotiated_curve()
-{
-   return mongoc_client_get_negotiated_curve(v1::client::internal::as_mongoc(check_moved_from(_client)));
+int client::get_negotiated_curve() {
+    return check_moved_from(_client).get_negotiated_curve();
 }
 
 void client::reset() {

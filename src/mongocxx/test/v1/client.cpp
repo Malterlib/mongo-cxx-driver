@@ -2204,6 +2204,36 @@ TEST_CASE("reset", "[mongocxx][v1][client]") {
     (void)mocks.make().reset();
 }
 
+TEST_CASE("abort", "[mongocxx][v1][client]") {
+    client_mocks_type mocks;
+
+    bool called = false;
+
+    auto client_abort = libmongoc::client_abort.create_instance();
+    client_abort->interpose([&](mongoc_client_t* ptr) -> void {
+        CHECK(ptr == mocks.client_id);
+        called = true;
+    });
+
+    mocks.make().abort();
+    CHECK(called);
+}
+
+TEST_CASE("get_negotiated_curve", "[mongocxx][v1][client]") {
+    client_mocks_type mocks;
+
+    // 0 when no group was negotiated
+    auto const curve = GENERATE(0, 23);
+
+    auto get_negotiated_curve = libmongoc::client_get_negotiated_curve.create_instance();
+    get_negotiated_curve->interpose([&](mongoc_client_t* ptr) -> int {
+        CHECK(ptr == mocks.client_id);
+        return curve;
+    });
+
+    CHECK(mocks.make().get_negotiated_curve() == curve);
+}
+
 TEST_CASE("append_metadata", "[mongocxx][v1][client]") {
     client_mocks_type mocks;
 

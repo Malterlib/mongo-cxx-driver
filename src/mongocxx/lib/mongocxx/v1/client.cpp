@@ -404,6 +404,14 @@ void client::reset() {
     libmongoc::client_reset(impl::with(this)->_client);
 }
 
+void client::abort() {
+    libmongoc::client_abort(impl::with(this)->_client);
+}
+
+int client::get_negotiated_curve() {
+    return libmongoc::client_get_negotiated_curve(impl::with(this)->_client);
+}
+
 std::error_category const& client::error_category() {
     class type final : public std::error_category {
         char const* name() const noexcept override {
